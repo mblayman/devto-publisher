@@ -10,15 +10,19 @@ botocore==1.12.224        # via boto3, s3transfer, zappa
 certifi==2019.6.16        # via requests
 cfn-flip==1.2.1           # via troposphere
 chardet==3.0.4            # via requests
-click==7.0                # via cfn-flip, kappa
+click==7.0                # via cfn-flip, flask, kappa
 docutils==0.15.2          # via botocore, zappa
 durationpy==0.5           # via zappa
+flask==1.1.1
 future==0.16.0            # via zappa
 hjson==3.0.1              # via zappa
 idna==2.8                 # via requests
+itsdangerous==1.1.0       # via flask
+jinja2==2.10.1            # via flask
 jmespath==0.9.3           # via boto3, botocore, zappa
 kappa==0.6.0              # via zappa
 lambda-packages==0.20.0   # via zappa
+markupsafe==1.1.1         # via jinja2
 placebo==0.9.0            # via kappa
 python-dateutil==2.6.1    # via botocore, zappa
 python-slugify==1.2.4     # via zappa
@@ -31,7 +35,7 @@ tqdm==4.19.1              # via zappa
 troposphere==2.5.1        # via zappa
 unidecode==1.1.1          # via python-slugify
 urllib3==1.25.3           # via botocore, requests
-werkzeug==0.15.6          # via zappa
+werkzeug==0.15.6          # via flask, zappa
 wheel==0.33.6             # via zappa
 wsgi-request-logger==0.4.6  # via zappa
 zappa==0.48.2

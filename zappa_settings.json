@@ -1,0 +1,15 @@
+{
+    "dev": {
+        "app_function": "app.app",
+        "aws_region": "us-east-1",
+        "profile_name": "zappa-deploy",
+        "project_name": "devto-publisher",
+        "runtime": "python3.7",
+        "s3_bucket": "zappa-9278lfvaj",
+        "keep_warm": false,
+        "events": [{
+            "function": "app.publish_scheduled_posts",
+            "expression": "rate(1 minute)"
+        }]
+    }
+}
