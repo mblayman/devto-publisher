@@ -5,10 +5,12 @@ import logging
 from dateutil.parser import parse
 from flask import Flask
 
-logger = logging.getLogger(__name__)
+from devto import DEVGateway
 
 
 app = Flask(__name__)
+dev_gateway = DEVGateway()
+logger = logging.getLogger(__name__)
 
 
 @app.route("/")
@@ -18,10 +20,15 @@ def index():
 
 
 def publish_scheduled_articles():
+    published_articles = dev_gateway.get_published_articles()
+    published_article_ids = set([article["id"] for article in published_articles])
+
     scheduled_articles = get_scheduled_articles()
     for scheduled_article in scheduled_articles:
-        if should_publish(scheduled_article):
-            publish(scheduled_article)
+        if should_publish(scheduled_article, published_article_ids):
+            article_id = scheduled_article["id"]
+            logger.info(f"Publishing article with id: {article_id}")
+            dev_gateway.publish(article_id)
 
 
 def get_scheduled_articles():
@@ -33,7 +40,7 @@ def get_scheduled_articles():
         return json.load(f)
 
 
-def should_publish(article):
+def should_publish(article, published_article_ids):
     """Check if the article should be published.
 
     This depends on if the date is in the past
@@ -41,15 +48,7 @@ def should_publish(article):
     """
     publish_date = parse(article["publish_date"])
     now = datetime.datetime.now(datetime.timezone.utc)
-    # TODO: check against existing published articles.
-    return publish_date < now
-
-
-def publish(article):
-    """Publish the article."""
-    print("publishing", article)
-    # TODO: fill this in.
-    # response = requests.put(f'https://dev.to/api/articles/{article_id}', json=data, headers={'api-key': os.environ['DEV_API_KEY']})
+    return publish_date < now and article["id"] not in published_article_ids
 
 
 if __name__ == "__main__":
