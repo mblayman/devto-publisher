@@ -8,7 +8,7 @@
         "s3_bucket": "zappa-9278lfvaj",
         "keep_warm": false,
         "events": [{
-            "function": "app.publish_scheduled_posts",
+            "function": "app.publish_scheduled_articles",
             "expression": "rate(1 minute)"
         }]
     }
