@@ -2,6 +2,7 @@
 import datetime
 import logging
 
+import requests
 from dateutil.parser import parse
 from flask import Flask
 
@@ -34,10 +35,10 @@ def publish_scheduled_articles():
 def get_scheduled_articles():
     """Get the schedule from GitHub."""
     logger.info("Fetch schedule.")
-    import json
-
-    with open("articles.json", "r") as f:
-        return json.load(f)
+    url = "https://raw.githubusercontent.com/mblayman/mattlayman.com/master/devto-schedule.json"
+    response = requests.get(url)
+    response.raise_for_status()
+    return response.json()
 
 
 def should_publish(article, published_article_ids):

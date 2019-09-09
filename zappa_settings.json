@@ -9,7 +9,7 @@
         "keep_warm": false,
         "events": [{
             "function": "app.publish_scheduled_articles",
-            "expression": "rate(1 minute)"
+            "expression": "rate(1 hour)"
         }]
     }
 }
